@@ -1,9 +1,7 @@
 from flask import Flask, request, jsonify, Response
 import json
 import db
-from bson.objectid import ObjectId
-from controller import get_data
-from controller import create_data
+from controller import get_data, create_data
 app = Flask(__name__)
 
 ##############################

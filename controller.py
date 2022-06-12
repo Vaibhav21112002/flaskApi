@@ -1,12 +1,14 @@
 from flask import Flask, request, jsonify, Response
 import json
 import db
-# from bson.objectid import ObjectId
+from bson.objectid import ObjectId
+from test import validates
 
 
 def get_data():
     try:
         data = list(db.db.collection.find())
+        print(data)
         for x in data:
             x["_id"] = str(x["_id"])
         return Response(
@@ -25,7 +27,13 @@ def create_data():
         if (content_type == 'application/json'):
             json = request.get_json()
             print(json)
-            db.db.collection.insert_one(json)
+            res = validates(json)
+            print(res)
+            if(len(res) == 0):
+                db.db.collection.insert_one(json)
+                return "Data Inserted Successfully"
+            else:
+                return res[0].message
         return "Data Inserted Successfully"
     except Exception as ex:
         print(ex)

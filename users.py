@@ -1,10 +1,13 @@
-from flask import Flask, request, jsonify, Response
+from flask import request, Response, Blueprint
 import json
 import db
-from test import validates
+from testValidation import validates
+
+user = Blueprint('user', __name__)
 
 
-def get_data():
+@user.route('/user', methods=['GET'])
+def get_user():
     try:
         data = list(db.db.collection.find())
         print(data)
@@ -20,7 +23,8 @@ def get_data():
         return Response(response=json.dumps({'error': 'Server Error'}), status=500, mimetype='application/json')
 
 
-def create_data():
+@user.route('/user', methods=['POST'])
+def create_user():
     try:
         content_type = request.headers.get('Content-Type')
         if (content_type == 'application/json'):

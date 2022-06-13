@@ -1,25 +1,16 @@
-from flask import Flask, request, jsonify, Response
-import json
+from flask import Flask
 import db
-from controller import get_data, create_data
+from users import user
+
 app = Flask(__name__)
 
-##############################
+
+@app.route('/', methods=['GET'])
+def check():
+    return "All OK"
 
 
-@app.route('/', methods=["POST"])
-def create_user():
-    return create_data()
-
-##############################
-
-
-@app.route('/', methods=["GET"])
-def get_user():
-    return get_data()
-
-##############################
-
+app.register_blueprint(user, url_prefix='/api')
 
 if __name__ == "__main__":
     app.run(debug=True, port=8000)

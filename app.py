@@ -1,6 +1,6 @@
 from flask import Flask
 import db
-from users import user
+from controllers.users import user
 
 app = Flask(__name__)
 
